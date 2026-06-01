@@ -34,3 +34,17 @@ jobs:
         run: npm install
       - name: Run Unit Test
         run: npm test
+
+  code-coverage:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - name: Install Node JS
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22.x
+      - name: Install Node Dependancy
+        run: npm install
+      - name: Run code coverage
+        run: npm run coverage
+
