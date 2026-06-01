@@ -78,7 +78,7 @@ jobs:
         with:
           context: .
           push: false
-          tag: ${{ vars.DOCKER_HUB_USERNAME }}/digilians-nodejs:${{ github.sha }}
+          tags: ${{ vars.DOCKER_HUB_USERNAME }}/digilians-nodejs:${{ github.sha }}
         # run: docker build -t ${{ vars.DOCKER_HUB_USERNAME }}/digilians:${{ github.sha }}
       - name: test docker image
         run: |
@@ -97,4 +97,4 @@ jobs:
         with:
           context: .
           push: true
-          tag: ${{ vars.DOCKER_HUB_USERNAME }}/digilians-nodejs:${{ github.sha }}
+          tags: ${{ vars.DOCKER_HUB_USERNAME }}/digilians-nodejs:${{ github.sha }}
