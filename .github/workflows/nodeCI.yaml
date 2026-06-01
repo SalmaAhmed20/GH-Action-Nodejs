@@ -40,6 +40,8 @@ jobs:
       - name: Set ENV VAR on  windows
         if : matrix.os =='windows-latest'
         run: Set-Variable -Name port -Value 4000
+      - name: print github context
+        run: echo ${{ github }}
 
   code-coverage:
     runs-on: ubuntu-latest
