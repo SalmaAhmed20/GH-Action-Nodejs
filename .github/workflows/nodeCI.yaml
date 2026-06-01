@@ -41,7 +41,7 @@ jobs:
         if : matrix.os =='windows-latest'
         run: Set-Variable -Name port -Value 4000
       - name: print github context
-        run: echo ${{ github }}
+        run: echo '${{ toJSON(github) }}'
 
   code-coverage:
     runs-on: ubuntu-latest
