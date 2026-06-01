@@ -35,8 +35,10 @@ jobs:
       - name: Run Unit Test
         run: npm test
       - name: Set ENV VAR on Linux and mac
+        if: runner.os =='Linux' || runner.os =='macos'
         run: export PORT=4000
       - name: Set ENV VAR on  windows
+        if : matrix.os =='windows-latest'
         run: Set-Variable -Name port -Value 4000
 
   code-coverage:
