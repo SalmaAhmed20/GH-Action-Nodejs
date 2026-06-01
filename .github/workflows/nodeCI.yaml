@@ -19,10 +19,10 @@ jobs:
       max-parallel: 2
       matrix:
         os: [ubuntu-latest,macos-latest,windows-latest]
-        node-version: [14.x,22.x,24.x]
-        exclude:
-        - os: macos-latest
-          node-version: 14.x
+        node-version: [22.x,24.x]
+        # exclude:
+        # - os: macos-latest
+        #   node-version: 14.x
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v6
@@ -58,9 +58,11 @@ jobs:
           node-version: 22.x
       - name: Install Node Dependancy
         run: npm install
+        # ------
       - name: Run code coverage
         continue-on-error: true
         run: npm run coverage
+        # -------
       - name: Upload coverage 
         if: always()
         uses: actions/upload-artifact@v7
