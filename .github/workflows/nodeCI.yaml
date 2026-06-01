@@ -65,4 +65,33 @@ jobs:
         uses: actions/upload-artifact@v7
         with:
           path: coverage
-
+  Docker_build:
+    needs: [code-coverage,unit-test]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - name: build docker image
+        uses: docker/build-push-action@v7
+        with:
+          context: .
+          push: false
+          tag: ${{ vars.DOCKER_HUB_USERNAME }}/digilians-nodejs:${{ github.sha }}
+        # run: docker build -t ${{ vars.DOCKER_HUB_USERNAME }}/digilians:${{ github.sha }}
+      - name: test docker image
+        run: |
+          docker container run --name test-container -d -p 32000:3000 ${{ vars.DOCKER_HUB_USERNAME }}/digilians-nodejs:${{ github.sha }}
+          sleep 10
+          curl http://localhost:32000
+          echo $?
+          docker container stop test-container
+      - name: Login Docker
+        uses: docker/login-action@v4
+        with:
+          username: ${{ vars.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+      - name: build docker image
+        uses: docker/build-push-action@v7
+        with:
+          context: .
+          push: true
+          tag: ${{ vars.DOCKER_HUB_USERNAME }}/digilians-nodejs:${{ github.sha }}
